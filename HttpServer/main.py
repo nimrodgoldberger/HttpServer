@@ -57,7 +57,7 @@ def independent_operation():
             return jsonify({"error-message": "Error: Not enough arguments to perform the operation " + operation}), 409
     elif operation == 'abs':
         if len(args) == 1:
-            res = int(math.abs(args[0]))
+            res = int(abs(args[0]))
         elif len(args) > 1:
             return jsonify({"error-message": "Error: Too many arguments to perform the operation " + operation}), 409
         else:
@@ -90,7 +90,7 @@ def calculate_stack_operation():
     if operation == 'abs' or operation == 'fact':
         if len(stack) > 0:
             if operation == 'abs':
-                result = math.abs(stack.pop())
+                result = abs(stack.pop())
             else:
                 x = stack.pop()
                 if x < 0:
@@ -149,6 +149,6 @@ def add_arguments_to_stack():
 
 
 if __name__ == '__main__':
-    server.run(host="localhost", port=8496, debug=True)
+    server.run(host="localhost", port=8496)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
