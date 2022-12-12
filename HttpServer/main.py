@@ -64,7 +64,11 @@ def independent_operation():
             return jsonify({"error-message": "Error: Not enough arguments to perform the operation " + operation}), 409
     elif operation == 'fact':
         if len(args) == 1:
-            res = int(math.factorial(args[0]))
+            if args[0] < 0:
+                return jsonify({"error-message": "Error while performing operation Factorial: "
+                                                 "not supported for the negative number"}), 409
+            else:
+                res = int(math.factorial(args[0]))
         elif len(args) > 1:
             return jsonify({"error-message": "Error: Too many arguments to perform the operation " + operation}), 409
         else:
@@ -88,7 +92,13 @@ def calculate_stack_operation():
             if operation == 'abs':
                 result = math.abs(stack.pop())
             else:
-                result = math.factorial(stack.pop())
+                x = stack.pop()
+                if x < 0:
+                    stack.append(x)
+                    return jsonify({"error-message": "Error while performing operation Factorial: "
+                                                     "not supported for the negative number"}), 409
+                else:
+                    result = math.factorial(x)
         else:
             return jsonify({"error-message": "Error: cannot implement operation " + operation +
                                              ". It requires 1 arguments and the stack has only " + str(len(stack))
@@ -134,7 +144,7 @@ def add_arguments_to_stack():
         else:
             while count > 0:
                 stack.pop()
-                count = count-1
+                count = count - 1
     return jsonify({"result": len(stack)}), 200
 
 
